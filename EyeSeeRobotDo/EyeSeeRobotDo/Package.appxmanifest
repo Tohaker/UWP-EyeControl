@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
+  <Identity Name="7749a468-9b73-4d9f-a16a-f0d66f2b1a11" Publisher="CN=Miles" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="7749a468-9b73-4d9f-a16a-f0d66f2b1a11" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>Eye See - Robot Do</DisplayName>
+    <PublisherDisplayName>Miles Bardon</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="EyeSeeRobotDo.App">
+      <uap:VisualElements DisplayName="EyeSeeRobotDo" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="This app is designed to provide eye tracking control to predetermined robotics and robotics protocols. It is the follow up version of the program written for the final year thesis of Miles Bardon at the University of Nottingham, UK. It utilises the Universal Windows Platform style of application to target the maximum number of Windows users and users of Eye Tracking devices." BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape" />
+        </uap:InitialRotationPreference>
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <Capability Name="privateNetworkClientServer" />
+    <DeviceCapability Name="gazeInput" />
+  </Capabilities>
+</Package>
