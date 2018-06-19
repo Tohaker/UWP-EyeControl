@@ -8,7 +8,109 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Page.Resources>
+        <Style TargetType="Button" x:Key="MenuBarButtonStyle">
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="Width" Value="45"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="Background" Value="{ThemeResource InkToolbarAccentColorThemeBrush}"/>
+        </Style>
 
+        <Style TargetType="TextBlock" x:Key="ListItemIconStyle">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="45"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <RelativePanel>
+            <Button Name="HamburgerMenuButton"
+                    Style="{StaticResource MenuBarButtonStyle}"
+                    Content="&#xE700;"
+                    Click="HamburgerMenuButton_Click"
+                    RelativePanel.AlignLeftWithPanel="True"/>
+
+            <Button Name="BackButton"
+                    Style="{StaticResource MenuBarButtonStyle}"                   
+                    Content="&#xE0A6;"     
+                    Click="BackButton_Click"
+                    RelativePanel.RightOf="HamburgerMenuButton"/>
+
+            <TextBlock Name="PageTitleTextBlock"
+                       Text="Robotic Control"
+                       FontWeight="Bold"
+                       Margin="20,0,0,0"
+                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                       RelativePanel.RightOf="BackButton"/>
+
+            <Button Name="SettingsPanelButton"
+                    Style="{StaticResource MenuBarButtonStyle}"
+                    Content="&#xE713;"
+                    Click="SettingsPanelButton_Click"
+                    RelativePanel.AlignRightWithPanel="True"/>
+        </RelativePanel>
+
+        <SplitView Name="ControlSelectionMenu"
+                   Grid.Row="1"
+                   CompactPaneLength="45"
+                   OpenPaneLength="200"
+                   DisplayMode="CompactOverlay">
+            <SplitView.Pane>
+                <ListBox Name="ControlSelectionListBox"
+                         Background="LightGray"
+                         SelectionMode="Single"
+                         SelectionChanged="ControlSelectionListBox_SelectionChanged">
+                    <ListBoxItem Padding="0,10,0,10">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource ListItemIconStyle}"
+                                       Text="&#xEC47;"/>
+                            <TextBlock Text="Vehicle Controls"
+                                       VerticalAlignment="Center"
+                                       Foreground="Black"
+                                       Margin="20,0,0,0"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem Padding="8,10,0,10">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Assets/Icons/robotic-arm.png"
+                                   Height="30"
+                                   Width="30"/>
+                            <TextBlock Text="Arm Controls"
+                                       VerticalAlignment="Center"
+                                       Foreground="Black"
+                                       Margin="27,0,0,0"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                </ListBox>
+            </SplitView.Pane>
+            <SplitView.Content>
+                <Frame Name="ControlsFrame"/>
+            </SplitView.Content>
+        </SplitView>
+
+        <SplitView PanePlacement="Right"
+                   Name="SettingsPanel"
+                   Grid.Row="1"
+                   CompactPaneLength="0"
+                   OpenPaneLength="300"
+                   DisplayMode="CompactInline">
+            <SplitView.Pane>
+                <ListBox Background="LightGray">
+                    
+                </ListBox>
+            </SplitView.Pane>
+        </SplitView>
     </Grid>
 </Page>
