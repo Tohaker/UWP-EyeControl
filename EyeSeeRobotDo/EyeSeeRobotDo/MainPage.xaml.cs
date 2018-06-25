@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace EyeSeeRobotDo
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private GazeElement gazeButtonControl;
+
         public MainPage()
         {
             this.InitializeComponent();
