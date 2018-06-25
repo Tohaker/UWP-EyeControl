@@ -5,6 +5,10 @@
     xmlns:local="using:EyeSeeRobotDo"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
+    gaze:GazeInput.Interaction="Enabled"
+    gaze:GazeInput.IsCursorVisible="True"
+    gaze:GazeInput.CursorRadius="20"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -39,7 +43,7 @@
             <Button Name="HamburgerMenuButton"
                     Style="{StaticResource MenuBarButtonStyle}"
                     Content="&#xE700;"
-                    Click="HamburgerMenuButton_Click"
+                    Click="HamburgerMenuButton_Click"                 
                     RelativePanel.AlignLeftWithPanel="True"/>
 
             <Button Name="BackButton"
