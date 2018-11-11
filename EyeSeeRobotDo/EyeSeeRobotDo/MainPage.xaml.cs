@@ -24,8 +24,6 @@ namespace EyeSeeRobotDo
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private GazeElement gazeButtonControl;
-
         public MainPage()
         {
             this.InitializeComponent();
@@ -38,6 +36,11 @@ namespace EyeSeeRobotDo
         private void GazeInput_IsDeviceAvailableChanged(object sender, object e)
         {
             DeviceAvailable.Text = GazeInput.IsDeviceAvailable ? "Eye tracker device available" : "No eye tracker device available";
+        }
+
+        private void OnStateChanged(object sender, StateChangedEventArgs ea)
+        {
+            Dwell.Text = ea.PointerState.ToString();
         }
 
         private void HamburgerMenuButton_Click(object sender, RoutedEventArgs e)
@@ -57,7 +60,7 @@ namespace EyeSeeRobotDo
 
         private void ControlSelectionListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            int i = 1;
         }
     }
 }
