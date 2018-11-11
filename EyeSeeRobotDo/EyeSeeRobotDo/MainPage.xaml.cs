@@ -6,6 +6,9 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -21,12 +24,23 @@ namespace EyeSeeRobotDo
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private GazeElement gazeButtonControl;
-
         public MainPage()
         {
             this.InitializeComponent();
             BackButton.Visibility = Visibility.Collapsed;
+
+            GazeInput.IsDeviceAvailableChanged += GazeInput_IsDeviceAvailableChanged;
+            GazeInput_IsDeviceAvailableChanged(null, null);
+        }
+
+        private void GazeInput_IsDeviceAvailableChanged(object sender, object e)
+        {
+            DeviceAvailable.Text = GazeInput.IsDeviceAvailable ? "Eye tracker device available" : "No eye tracker device available";
+        }
+
+        private void OnStateChanged(object sender, StateChangedEventArgs ea)
+        {
+            Dwell.Text = ea.PointerState.ToString();
         }
 
         private void HamburgerMenuButton_Click(object sender, RoutedEventArgs e)
@@ -36,7 +50,7 @@ namespace EyeSeeRobotDo
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ControlsFrame.CanGoBack) ControlsFrame.GoBack();
+            //if (ControlsFrame.CanGoBack) ControlsFrame.GoBack();
         }
 
         private void SettingsPanelButton_Click(object sender, RoutedEventArgs e)
@@ -46,7 +60,7 @@ namespace EyeSeeRobotDo
 
         private void ControlSelectionListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            int i = 1;
         }
     }
 }
