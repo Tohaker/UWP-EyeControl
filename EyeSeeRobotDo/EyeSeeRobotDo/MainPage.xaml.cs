@@ -50,7 +50,7 @@ namespace EyeSeeRobotDo
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ControlsFrame.CanGoBack) ControlsFrame.GoBack();
+            //if (ControlsFrame.CanGoBack) ControlsFrame.GoBack();
         }
 
         private void SettingsPanelButton_Click(object sender, RoutedEventArgs e)
