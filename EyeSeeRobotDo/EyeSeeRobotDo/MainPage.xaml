@@ -7,8 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
     gaze:GazeInput.Interaction="Enabled"
-    gaze:GazeInput.IsCursorVisible="True"
-    gaze:GazeInput.CursorRadius="20"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -58,6 +56,12 @@
                        Margin="20,0,0,0"
                        RelativePanel.AlignVerticalCenterWithPanel="True"
                        RelativePanel.RightOf="BackButton"/>
+
+            <TextBlock Name="DeviceAvailable"
+                       Text="Device Availability not yet detected"
+                       Margin="20,0,0,0"
+                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                       RelativePanel.RightOf="PageTitleTextBlock"/>
 
             <Button Name="SettingsPanelButton"
                     Style="{StaticResource MenuBarButtonStyle}"
