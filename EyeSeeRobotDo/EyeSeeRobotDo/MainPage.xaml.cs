@@ -35,6 +35,33 @@ namespace EyeSeeRobotDo
 
             GazeInput.IsDeviceAvailableChanged += GazeInput_IsDeviceAvailableChanged;
             GazeInput_IsDeviceAvailableChanged(null, null);
+            setDwellAllButtons(this, 1500);
+        }
+
+        private void setDwellAllButtons(object uiElement, int dwellMillis)
+        {
+            if (uiElement is Button)
+            {
+                GazeInput.SetDwellDuration((Button)uiElement, new TimeSpan(0, 0, 0, 0, dwellMillis));
+            }
+            else if (uiElement is Panel)
+            {
+                var uiElementAsCollection = (Panel)uiElement;
+                foreach (var element in uiElementAsCollection.Children)
+                {
+                    setDwellAllButtons(element, dwellMillis);
+                }
+            }
+            else if (uiElement is UserControl)
+            {
+                var uiElementAsUserControl = (UserControl)uiElement;
+                setDwellAllButtons(uiElementAsUserControl.Content, dwellMillis);
+            }
+            else if (uiElement is ContentControl)
+            {
+                var uiElementAsContentControl = (ContentControl)uiElement;
+                setDwellAllButtons(uiElementAsContentControl.Content, dwellMillis);
+            }
         }
 
         private void GazeInput_IsDeviceAvailableChanged(object sender, object e)
