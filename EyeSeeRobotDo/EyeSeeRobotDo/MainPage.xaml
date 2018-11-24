@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     gaze:GazeInput.Interaction="Enabled"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -38,51 +37,64 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <Popup x:Name="_gazeMarker" Grid.Column="0" Grid.Row="0"
+         HorizontalAlignment="Left" VerticalAlignment="Top"
+         IsOpen="True" IsHitTestVisible="False">
+            <Ellipse x:Name="_dwell" Opacity="0.3">
+                <Ellipse.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform x:Name="_dwellScale" />
+                        <TranslateTransform x:Name="_dwellPosition" />
+                    </TransformGroup>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+        </Popup>
+
         <RelativePanel>
             <Button Name="HamburgerMenuButton"
-                    Style="{StaticResource MenuBarButtonStyle}"
-                    Content="&#xE700;"
-                    Click="HamburgerMenuButton_Click"                 
-                    RelativePanel.AlignLeftWithPanel="True">
+                Style="{StaticResource MenuBarButtonStyle}"
+                Content="&#xE700;"
+                Click="HamburgerMenuButton_Click"                 
+                RelativePanel.AlignLeftWithPanel="True">
                 <gaze:GazeInput.GazeElement>
                     <gaze:GazeElement StateChanged="OnStateChanged"/>
                 </gaze:GazeInput.GazeElement>
             </Button>
 
             <Button Name="BackButton"
-                    Style="{StaticResource MenuBarButtonStyle}"                   
-                    Content="&#xE0A6;"     
-                    Click="BackButton_Click"
-                    RelativePanel.RightOf="HamburgerMenuButton">
+                Style="{StaticResource MenuBarButtonStyle}"                   
+                Content="&#xE0A6;"     
+                Click="BackButton_Click"
+                RelativePanel.RightOf="HamburgerMenuButton">
                 <gaze:GazeInput.GazeElement>
                     <gaze:GazeElement StateChanged="OnStateChanged"/>
                 </gaze:GazeInput.GazeElement>
             </Button>
 
             <TextBlock Name="PageTitleTextBlock"
-                       Text="Robotic Control"
-                       FontWeight="Bold"
-                       Margin="20,0,0,0"
-                       RelativePanel.AlignVerticalCenterWithPanel="True"
-                       RelativePanel.RightOf="BackButton"/>
+                    Text="Robotic Control"
+                    FontWeight="Bold"
+                    Margin="20,0,0,0"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    RelativePanel.RightOf="BackButton"/>
 
             <TextBlock Name="DeviceAvailable"
-                       Text="Device availability not yet detected"
-                       Margin="20,0,0,0"
-                       RelativePanel.AlignVerticalCenterWithPanel="True"
-                       RelativePanel.RightOf="PageTitleTextBlock"/>
+                    Text="Device availability not yet detected"
+                    Margin="20,0,0,0"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    RelativePanel.RightOf="PageTitleTextBlock"/>
 
             <TextBlock Name="Dwell"
-                       Text=""
-                       Margin="20,0,0,0"
-                       RelativePanel.AlignVerticalCenterWithPanel="True"
-                       RelativePanel.RightOf="DeviceAvailable"/>
+                    Text=""
+                    Margin="20,0,0,0"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    RelativePanel.RightOf="DeviceAvailable"/>
 
             <Button Name="SettingsPanelButton"
-                    Style="{StaticResource MenuBarButtonStyle}"
-                    Content="&#xE713;"
-                    Click="SettingsPanelButton_Click"
-                    RelativePanel.AlignRightWithPanel="True">
+                Style="{StaticResource MenuBarButtonStyle}"
+                Content="&#xE713;"
+                Click="SettingsPanelButton_Click"
+                RelativePanel.AlignRightWithPanel="True">
                 <gaze:GazeInput.GazeElement>
                     <gaze:GazeElement StateChanged="OnStateChanged"/>
                 </gaze:GazeInput.GazeElement>
@@ -90,47 +102,47 @@
         </RelativePanel>
 
         <SplitView PanePlacement="Left"
-                   Name="ControlSelectionMenu"
-                   Grid.Row="1"
-                   CompactPaneLength="45"
-                   OpenPaneLength="200"
-                   DisplayMode="CompactInline">
+                Name="ControlSelectionMenu"
+                Grid.Row="1"
+                CompactPaneLength="45"
+                OpenPaneLength="200"
+                DisplayMode="CompactInline">
             <SplitView.Pane>
                 <RelativePanel Background="LightGray">
                     <Button Name="VehicleControlButton"
-                            Width="Auto"
-                            Padding="0"
-                            RelativePanel.AlignTopWithPanel="True"
-                            Background="LightGray">
-                            <StackPanel Orientation="Horizontal"
-                                        HorizontalAlignment="Stretch"
-                                        Padding="0,10,10,10">
-                                <TextBlock Style="{StaticResource ListItemIconStyle}"
-                                       Text="&#xEC47;"/>
-                                <TextBlock Text="Vehicle Controls"
-                                       VerticalAlignment="Center"
-                                       Foreground="Black"
-                                       Margin="20,0,0,0"/>
-                            </StackPanel>
-                            <gaze:GazeInput.GazeElement>
-                                <gaze:GazeElement StateChanged="OnStateChanged"/>
-                            </gaze:GazeInput.GazeElement>
-                        </Button>
+                        Width="Auto"
+                        Padding="0"
+                        RelativePanel.AlignTopWithPanel="True"
+                        Background="LightGray">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Stretch"
+                                    Padding="0,10,10,10">
+                            <TextBlock Style="{StaticResource ListItemIconStyle}"
+                                    Text="&#xEC47;"/>
+                            <TextBlock Text="Vehicle Controls"
+                                    VerticalAlignment="Center"
+                                    Foreground="Black"
+                                    Margin="20,0,0,0"/>
+                        </StackPanel>
+                        <gaze:GazeInput.GazeElement>
+                            <gaze:GazeElement DwellProgressFeedback="DwellProgress"/>
+                        </gaze:GazeInput.GazeElement>
+                    </Button>
 
                     <Button HorizontalAlignment="Stretch"
-                            Padding="0"
-                            RelativePanel.Below="VehicleControlButton"
-                            Background="LightGray">
+                        Padding="0"
+                        RelativePanel.Below="VehicleControlButton"
+                        Background="LightGray">
                         <StackPanel Orientation="Horizontal"
-                                    Padding="0,10,10,10">
+                                Padding="0,10,10,10">
                             <Image Source="Assets/Icons/robotic-arm.png"
-                               Height="30"
-                               Width="30"
-                               Margin="8,0,0,0"/>
+                            Height="30"
+                            Width="30"
+                            Margin="8,0,0,0"/>
                             <TextBlock Text="Arm Controls"
-                                       VerticalAlignment="Center"
-                                       Foreground="Black"
-                                       Margin="28,0,0,0"/>
+                                    VerticalAlignment="Center"
+                                    Foreground="Black"
+                                    Margin="28,0,0,0"/>
                         </StackPanel>
                         <gaze:GazeInput.GazeElement>
                             <gaze:GazeElement StateChanged="OnStateChanged"/>
@@ -139,18 +151,19 @@
                 </RelativePanel>
             </SplitView.Pane>
         </SplitView>
-            
+
         <SplitView PanePlacement="Right"
-                   Name="SettingsPanel"
-                   Grid.Row="1"
-                   CompactPaneLength="0"
-                   OpenPaneLength="300"
-                   DisplayMode="CompactInline">
+                Name="SettingsPanel"
+                Grid.Row="1"
+                CompactPaneLength="0"
+                OpenPaneLength="300"
+                DisplayMode="CompactInline">
             <SplitView.Pane>
                 <RelativePanel Background="LightGray">
-                    
+
                 </RelativePanel>
             </SplitView.Pane>
         </SplitView>
     </Grid>
+
 </Page>
