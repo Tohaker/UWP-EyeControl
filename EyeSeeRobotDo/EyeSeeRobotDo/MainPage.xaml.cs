@@ -1,11 +1,17 @@
 ﻿using Microsoft.Toolkit.Uwp.Input.GazeInteraction;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Timers;
+using Windows.Devices.Input.Preview;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -21,12 +27,97 @@ namespace EyeSeeRobotDo
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private GazeElement gazeButtonControl;
 
         public MainPage()
         {
             this.InitializeComponent();
             BackButton.Visibility = Visibility.Collapsed;
+
+            GazeInput.IsDeviceAvailableChanged += GazeInput_IsDeviceAvailableChanged;
+            GazeInput_IsDeviceAvailableChanged(null, null);
+            setDwellAllButtons(this, 1500);
+        }
+
+        private void setDwellAllButtons(object uiElement, int dwellMillis)
+        {
+            if (uiElement is Button)
+            {
+                GazeInput.SetDwellDuration((Button)uiElement, new TimeSpan(0, 0, 0, 0, dwellMillis));
+            }
+            else if (uiElement is Panel)
+            {
+                var uiElementAsCollection = (Panel)uiElement;
+                foreach (var element in uiElementAsCollection.Children)
+                {
+                    setDwellAllButtons(element, dwellMillis);
+                }
+            }
+            else if (uiElement is UserControl)
+            {
+                var uiElementAsUserControl = (UserControl)uiElement;
+                setDwellAllButtons(uiElementAsUserControl.Content, dwellMillis);
+            }
+            else if (uiElement is ContentControl)
+            {
+                var uiElementAsContentControl = (ContentControl)uiElement;
+                setDwellAllButtons(uiElementAsContentControl.Content, dwellMillis);
+            }
+        }
+
+        private void GazeInput_IsDeviceAvailableChanged(object sender, object e)
+        {
+            DeviceAvailable.Text = GazeInput.IsDeviceAvailable ? "Eye tracker device available" : "No eye tracker device available";
+        }
+
+        private void OnStateChanged(object sender, StateChangedEventArgs ea)
+        {
+            Dwell.Text = ea.PointerState.ToString();
+        }
+
+        private void DwellProgress(object sender, DwellProgressEventArgs e)
+        {
+            var target = sender as FrameworkElement;
+            if (target == null) return;
+
+            // Find out where to render the dwell indicator
+            var targetPosition = target.TransformToVisual(_gazeMarker).TransformPoint(new Point(0, 0));
+            var targetWidth = target.ActualWidth;
+            var targetHeight = target.ActualHeight;
+
+            // Set the size
+            var maxRadius = Math.Min(targetWidth, targetHeight);
+            var radius = Math.Min(maxRadius / 1.61803398875, 100);
+            _dwell.Width = radius;
+            _dwell.Height = radius;
+            _dwellPosition.X = targetPosition.X + (targetWidth - _dwell.Width) / 2;
+            _dwellPosition.Y = targetPosition.Y + (targetHeight - _dwell.Height) / 2;
+            _dwellScale.CenterX = _dwell.Width / 2;
+            _dwellScale.CenterY = _dwell.Height / 2;
+            _dwellScale.ScaleX = 1.0f - e.Progress;
+            _dwellScale.ScaleY = 1.0f - e.Progress;
+
+            // Set the color and visibility of the indicator
+            switch (e.State)
+            {
+                case DwellProgressState.Fixating:
+                    _dwell.Visibility = Visibility.Visible;
+                    _dwell.Fill = GazeInput.DwellFeedbackEnterBrush;
+                    break;
+                case DwellProgressState.Progressing:
+                    _dwell.Visibility = Visibility.Visible;
+                    _dwell.Fill = GazeInput.DwellFeedbackProgressBrush;
+                    break;
+                case DwellProgressState.Complete:
+                    _dwell.Visibility = Visibility.Visible;
+                    _dwell.Fill = GazeInput.DwellFeedbackCompleteBrush;
+                    break;
+                case DwellProgressState.Idle:
+                    _dwell.Visibility = Visibility.Collapsed;
+                    break;
+            }
+
+            // And tell the interaction library that you handled the event
+            e.Handled = true;
         }
 
         private void HamburgerMenuButton_Click(object sender, RoutedEventArgs e)
@@ -36,7 +127,7 @@ namespace EyeSeeRobotDo
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ControlsFrame.CanGoBack) ControlsFrame.GoBack();
+            //if (ControlsFrame.CanGoBack) ControlsFrame.GoBack();
         }
 
         private void SettingsPanelButton_Click(object sender, RoutedEventArgs e)
@@ -46,7 +137,7 @@ namespace EyeSeeRobotDo
 
         private void ControlSelectionListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            int i = 1;
         }
     }
 }
