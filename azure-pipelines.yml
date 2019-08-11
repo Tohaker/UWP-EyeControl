@@ -32,3 +32,9 @@ steps:
 				  /p:AppxBundle=Always 
 				  /p:UapAppxPackageBuildMode=StoreUpload 
 				  /p:AppxPackageSigningEnabled=false'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/Tests/**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
