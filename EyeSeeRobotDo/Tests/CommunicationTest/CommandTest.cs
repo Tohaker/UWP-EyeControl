@@ -1,8 +1,8 @@
-﻿
-using System;
+﻿using System;
+using Communication;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace EyeSeeRobotDoTest
+namespace CommunicationTest
 {
     [TestClass]
     public class CommandTest
@@ -10,7 +10,7 @@ namespace EyeSeeRobotDoTest
         [TestMethod]
         public void ConstructWirelessStatusCheckTest()
         {
-            Command command = new Command(Communication.Wireless, "hand.dev");
+            WirelessCommand command = new WirelessCommand("hand.dev");
             String expected = "hand.dev/";
 
             String actual = command.StatusCheck();
