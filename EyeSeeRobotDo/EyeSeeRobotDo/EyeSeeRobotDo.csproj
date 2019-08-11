@@ -110,6 +110,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="ApplicationPrivateKey.pfx" />
     <None Include="EyeSeeRobotDo_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
