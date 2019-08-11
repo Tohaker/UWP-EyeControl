@@ -114,7 +114,6 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="ApplicationPrivateKey.pfx" />
-    <None Include="EyeSeeRobotDo_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Icons\robotic-arm.png" />

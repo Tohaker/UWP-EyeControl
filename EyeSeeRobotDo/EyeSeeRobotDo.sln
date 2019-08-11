@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EyeSeeRobotDo", "EyeSeeRobo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5E6D3A02-5F9F-457B-B7BB-1EA858A0DCE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EyeSeeRobotDoTest", "Tests\EyeSeeRobotDoTest\EyeSeeRobotDoTest.csproj", "{604C34FF-24D2-4F11-8A41-5982BE6569D1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Communication", "Communication\Communication.csproj", "{0E8E5F83-8606-4CD2-A2BA-E255D11B57D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationTest", "Tests\CommunicationTest\CommunicationTest.csproj", "{1E58FFBA-25AC-4028-8BBE-D1EDC77A7E82}"
