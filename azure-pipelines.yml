@@ -14,15 +14,8 @@ variables:
   buildPlatform: 'x86|x64|ARM'
   buildConfiguration: 'Release'
   appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
-  group: 'signing-variables'
 
 steps:
-- task: DownloadSecureFile@1
-  name: signingCert
-  displayName: 'Download CA Certificate'
-  inputs:
-    secureFile: 'ApplicationPrivateKey.pfx'
-
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
