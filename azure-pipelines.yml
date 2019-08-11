@@ -38,6 +38,4 @@ steps:
 				  /p:AppxPackageDir="$(appxPackageDir)" 
 				  /p:AppxBundle=Always 
 				  /p:UapAppxPackageBuildMode=StoreUpload 
-				  /p:PackageCertificateThumbprint="" 
-                  /p:PackageCertificateKeyFile="$(signingCert.secureFilePath)"
-				  /p:PackageCertificatePassword="$(private_key_pass)"'
+				  /p:AppxPackageSigningEnabled=false'
