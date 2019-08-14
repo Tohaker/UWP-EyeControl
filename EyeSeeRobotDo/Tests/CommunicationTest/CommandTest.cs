@@ -17,5 +17,16 @@ namespace CommunicationTest
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void ConstructSerialStatusCheckTest()
+        {
+            SerialCommand command = new SerialCommand("COM1");
+            String expected = "0";
+
+            String actual = command.StatusCheck();
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
