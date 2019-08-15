@@ -19,5 +19,20 @@ namespace Communication
         {
             return HostName + "/";
         }
+
+        public override string MoveFingers(int[] fingers, bool hold)
+        {
+            string result = String.Format("{0}/move?fingers=", HostName);
+            int fingerResult = 0;
+
+            for (int i = 0; i < fingers.Length; i++)
+            {
+                if (fingers[i] == 1)
+                    fingerResult += fingers[i] << i;
+            }
+
+            result += String.Format("{0}&hold={1}", fingerResult, hold.ToString().ToLower());
+            return result;
+        }
     }
 }

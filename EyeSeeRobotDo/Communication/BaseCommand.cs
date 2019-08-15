@@ -9,6 +9,7 @@ namespace Communication
     public abstract class BaseCommand
     {
         protected CommandType type;
-        public abstract String StatusCheck();
+        public abstract string StatusCheck();
+        public abstract string MoveFingers(int[] fingers, bool hold);
     }
 }

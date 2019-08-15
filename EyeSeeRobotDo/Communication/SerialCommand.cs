@@ -6,8 +6,8 @@ namespace Communication
 {
     public class SerialCommand : BaseCommand
     {
-        public String SerialPort { get; private set; }
-        public SerialCommand(String port)
+        public string SerialPort { get; private set; }
+        public SerialCommand(string port)
         {
             type = CommandType.Serial;
             SerialPort = port;
@@ -16,6 +16,11 @@ namespace Communication
         public override string StatusCheck()
         {
             return "0";
+        }
+
+        public override string MoveFingers(int[] fingers, bool hold)
+        {
+            throw new NotImplementedException();
         }
     }
 }
