@@ -5,6 +5,7 @@
 
 trigger:
 - master
+- EYE-*
 
 pool:
   vmImage: 'windows-latest'
