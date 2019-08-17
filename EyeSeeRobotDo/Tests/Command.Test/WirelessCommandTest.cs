@@ -35,5 +35,20 @@ namespace Command.Test
 
             Assert.Equal(expected, actual);
         }
+
+        // We only need to test a couple of the finger sets as the main bulk are tested 
+        // in the previous test.
+        [Theory]
+        [InlineData(new int[] { 0, 0, 0, 0 }, "0")]
+        [InlineData(new int[] { 1, 1, 1, 1 }, "15")]
+        public void ConstructHoldFingersTest(int[] selectedFingers, string expectedFingers)
+        {
+            WirelessCommand command = new WirelessCommand("hand.dev");
+            string expected = String.Format("hand.dev/move?fingers={0}&hold=true", expectedFingers);
+
+            string actual = command.MoveFingers(selectedFingers, true);
+
+            Assert.Equal(expected, actual);
+        }
     }
 }
