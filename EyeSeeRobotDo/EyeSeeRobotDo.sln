@@ -7,14 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EyeSeeRobotDo", "EyeSeeRobo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5E6D3A02-5F9F-457B-B7BB-1EA858A0DCE4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Communication", "Communication\Communication.csproj", "{0E8E5F83-8606-4CD2-A2BA-E255D11B57D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Command", "Communication\Command.csproj", "{0E8E5F83-8606-4CD2-A2BA-E255D11B57D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F2818BA8-502D-4264-B045-08238D30FD14}"
 	ProjectSection(SolutionItems) = preProject
 		..\azure-pipelines.yml = ..\azure-pipelines.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Command.Test", "Tests\Command.Test\Command.Test.csproj", "{278D2DE0-6C6B-44FA-A9DC-D676878F5B83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Command.Test", "Tests\Command.Test\Command.Test.csproj", "{278D2DE0-6C6B-44FA-A9DC-D676878F5B83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

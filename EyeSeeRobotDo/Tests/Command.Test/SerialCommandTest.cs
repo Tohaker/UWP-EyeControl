@@ -1,4 +1,4 @@
-using Communication;
+using Command;
 using System;
 using Xunit;
 

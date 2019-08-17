@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Communication;
+using Command;
 using Xunit;
 
 namespace Command.Test

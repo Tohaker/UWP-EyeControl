@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Communication
+namespace Command
 {
     public class SerialCommand : BaseCommand
     {
