@@ -5,7 +5,9 @@
 
 trigger:
 - master
-- EYE-*
+
+pr:
+- master
 
 pool:
   vmImage: 'windows-latest'
@@ -24,6 +26,7 @@ steps:
     restoreSolution: '$(solution)'
 
 - task: VSBuild@1
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   inputs:
     platform: 'x86'
     solution: '$(solution)'
