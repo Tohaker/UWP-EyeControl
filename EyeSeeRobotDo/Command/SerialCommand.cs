@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Command.Communication;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,8 +7,8 @@ namespace Command
 {
     public class SerialCommand : BaseCommand
     {
-        public string SerialPort { get; private set; }
-        public SerialCommand(string port)
+        public ISerialPort SerialPort { get; private set; }
+        public SerialCommand(ISerialPort port)
         {
             type = CommandType.Serial;
             SerialPort = port;

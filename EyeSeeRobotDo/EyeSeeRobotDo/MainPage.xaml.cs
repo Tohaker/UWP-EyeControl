@@ -137,7 +137,7 @@ namespace EyeSeeRobotDo
 
         private void ControlSelectionListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int i = 1;
+
         }
     }
 }

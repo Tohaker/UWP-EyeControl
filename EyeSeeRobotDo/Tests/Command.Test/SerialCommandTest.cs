@@ -1,4 +1,6 @@
 using Command;
+using Command.Communication;
+using Moq;
 using System;
 using Xunit;
 
@@ -6,15 +8,54 @@ namespace Command.Test
 {
     public class SerialCommandTest
     {
+        private Mock<ISerialPort> mock;
+        public SerialCommandTest()
+        {
+            mock = new Mock<ISerialPort>();
+        }
+
         [Fact]
         public void ConstructStatusCheckTest()
         {
-            SerialCommand command = new SerialCommand("COM1");
-            String expected = "0";
+            ISerialPort port = mock.Object;
 
-            String actual = command.StatusCheck();
+            SerialCommand command = new SerialCommand(port);
+            string expected = "0";
+
+            string actual = command.StatusCheck();
 
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void SendSuccessfulStatusCheckTest()
+        {
+            string expected = "0";
+            mock.Setup(sp => sp.Send(It.Is<string>(s => s.Equals("0")))).Returns(true);
+            mock.Setup(sp => sp.Read()).Returns(expected);
+            ISerialPort port = mock.Object;
+
+            SerialCommand command = new SerialCommand(port);
+            string response = "";
+
+            if(command.SerialPort.Send(command.StatusCheck()))
+                response = command.SerialPort.Read();
+
+            Assert.True(command.ValidateResponse(expected, response));
+        }
+
+        [Fact]
+        public void HandleExceptionOnSendTimeoutTest()
+        {
+            mock.Setup(sp => sp.Send(It.Is<string>(s => s.Equals("0")))).Returns(true);
+            mock.Setup(sp => sp.Read()).Throws(new TimeoutException());
+            ISerialPort port = mock.Object;
+
+            SerialCommand command = new SerialCommand(port);
+            string response = "";
+
+            if (command.SerialPort.Send(command.StatusCheck()))
+                response = command.SerialPort.Read();
         }
 
         [Theory]
@@ -27,7 +68,9 @@ namespace Command.Test
         [InlineData(new int[] { 1, 0, 0, 1 }, "9")]
         public void ConstructReleaseFingersTest(int[] selectedFingers, string expected)
         {
-            SerialCommand command = new SerialCommand("COM1");
+            ISerialPort port = mock.Object;
+
+            SerialCommand command = new SerialCommand(port);
 
             string actual = command.MoveFingers(selectedFingers, false);
 
@@ -46,7 +89,9 @@ namespace Command.Test
         [InlineData(new int[] { 1, 0, 0, 1 }, "25")]
         public void ConstructHoldFingersTest(int[] selectedFingers, string expected)
         {
-            SerialCommand command = new SerialCommand("COM1");
+            ISerialPort port = mock.Object;
+
+            SerialCommand command = new SerialCommand(port);
 
             string actual = command.MoveFingers(selectedFingers, true);
 
