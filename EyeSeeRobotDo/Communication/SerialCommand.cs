@@ -20,7 +20,18 @@ namespace Communication
 
         public override string MoveFingers(int[] fingers, bool hold)
         {
-            throw new NotImplementedException();
+            int result = 0;
+
+            for (int i = 0; i < fingers.Length; i++)
+            {
+                if (fingers[i] == 1)
+                    result += fingers[i] << i;
+            }
+
+            if (hold)
+                result += 1 << 4;
+
+            return result.ToString();
         }
     }
 }
