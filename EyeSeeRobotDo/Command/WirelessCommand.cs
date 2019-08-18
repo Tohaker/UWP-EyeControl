@@ -34,5 +34,15 @@ namespace Command
             result += String.Format("{0}&hold={1}", fingerResult, hold.ToString().ToLower());
             return result;
         }
+
+        public override bool Send(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string Read()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -11,6 +11,8 @@ namespace Command
         protected CommandType type;
         public abstract string StatusCheck();
         public abstract string MoveFingers(int[] fingers, bool hold);
+        public abstract bool Send(string message);
+        public abstract string Read();
         public bool ValidateResponse(string expected, string actual)
         {
             return (actual.Equals(expected));

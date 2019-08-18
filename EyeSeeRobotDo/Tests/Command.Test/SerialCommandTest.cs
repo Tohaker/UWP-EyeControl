@@ -31,15 +31,15 @@ namespace Command.Test
         public void SendSuccessfulStatusCheckTest()
         {
             string expected = "0";
-            mock.Setup(sp => sp.Send(It.Is<string>(s => s.Equals("0")))).Returns(true);
+            mock.Setup(sp => sp.Send(It.Is<string>(s => s.Equals("0"))));
             mock.Setup(sp => sp.Read()).Returns(expected);
             ISerialPort port = mock.Object;
 
             SerialCommand command = new SerialCommand(port);
             string response = "";
 
-            if(command.SerialPort.Send(command.StatusCheck()))
-                response = command.SerialPort.Read();
+            if(command.Send(command.StatusCheck()))
+                response = command.Read();
 
             Assert.True(command.ValidateResponse(expected, response));
         }
@@ -47,15 +47,18 @@ namespace Command.Test
         [Fact]
         public void HandleExceptionOnSendTimeoutTest()
         {
-            mock.Setup(sp => sp.Send(It.Is<string>(s => s.Equals("0")))).Returns(true);
+            mock.Setup(sp => sp.Send(It.Is<string>(s => s.Equals("0"))));
             mock.Setup(sp => sp.Read()).Throws(new TimeoutException());
             ISerialPort port = mock.Object;
 
             SerialCommand command = new SerialCommand(port);
             string response = "";
+            string expected = "0";
 
-            if (command.SerialPort.Send(command.StatusCheck()))
-                response = command.SerialPort.Read();
+            if (command.Send(command.StatusCheck()))
+                response = command.Read();
+
+            Assert.False(command.ValidateResponse(expected, response));
         }
 
         [Theory]

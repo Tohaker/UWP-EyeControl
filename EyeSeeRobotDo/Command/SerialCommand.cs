@@ -34,5 +34,32 @@ namespace Command
 
             return result.ToString();
         }
+
+        public override bool Send(string message)
+        {
+            try
+            {
+                SerialPort.Send(message);
+                return true;
+            } catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public override string Read()
+        {
+            try
+            {
+                string response = SerialPort.Read();
+                return response;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "";
+            }
+        }
     }
 }

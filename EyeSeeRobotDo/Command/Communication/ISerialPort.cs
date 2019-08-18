@@ -6,7 +6,7 @@ namespace Command.Communication
 {
     public interface ISerialPort
     {
-        bool Send(string message);
+        void Send(string message);
         string Read();
         string Port { get; set; }
     }

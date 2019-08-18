@@ -1,26 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.IO.Ports;
 
 namespace Command.Communication
 {
     class RobotSerialPort : ISerialPort
     {
         public string Port { get; set; }
+        public SerialPort serialPort { get; private set; }
 
         public RobotSerialPort(string port)
         {
             Port = port;
+            serialPort = new SerialPort(Port, 9600);
         }
 
         public string Read()
         {
-            throw new NotImplementedException();
+            return serialPort.ReadExisting();
         }
 
-        public bool Send(string message)
+        public void Send(string message)
         {
-            throw new NotImplementedException();
+            serialPort.WriteLine(message);
         }
     }
 }
