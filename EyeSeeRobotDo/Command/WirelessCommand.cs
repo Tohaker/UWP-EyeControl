@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Command
 {
     public class WirelessCommand : BaseCommand
     {
-        public String HostName { get; private set; }
-        public WirelessCommand(String hostname)
+        public string HostName { get; private set; }
+        public HttpClient client { get; private set; }
+        public WirelessCommand(string hostname)
         {
             HostName = hostname;
             type = CommandType.Wireless;
@@ -17,12 +18,12 @@ namespace Command
 
         public override string StatusCheck()
         {
-            return HostName + "/";
+            return "http://" + HostName + "/";
         }
 
         public override string MoveFingers(int[] fingers, bool hold)
         {
-            string result = String.Format("{0}/move?fingers=", HostName);
+            string result = String.Format("http://{0}/move?fingers=", HostName);
             int fingerResult = 0;
 
             for (int i = 0; i < fingers.Length; i++)
@@ -35,14 +36,27 @@ namespace Command
             return result;
         }
 
+        public async Task<Dictionary<string, string>> Request(string url)
+        {
+            Dictionary<string, string> response = new Dictionary<string, string>();
+            if (client == null)
+                client = new HttpClient();
+            HttpResponseMessage httpResponse = await client.GetAsync(url);
+            
+            if (httpResponse.IsSuccessStatusCode)
+                response = JsonConvert.DeserializeObject<Dictionary<string, string>>(httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+
+            return response;
+        }
+
         public override bool Send(string message)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Please use the Request method instead.");
         }
 
         public override string Read()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Please use the Request method instead.");
         }
     }
 }
