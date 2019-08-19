@@ -14,14 +14,8 @@ namespace Command.Communication
             serialPort = new SerialPort(Port, 9600);
         }
 
-        public string Read()
-        {
-            return serialPort.ReadExisting();
-        }
+        public string Read() { return serialPort.ReadExisting(); }
 
-        public void Send(string message)
-        {
-            serialPort.WriteLine(message);
-        }
+        public void Send(string message) { serialPort.WriteLine(message); }
     }
 }
