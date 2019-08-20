@@ -48,15 +48,5 @@ namespace Command
 
             return response;
         }
-
-        public override bool Send(string message)
-        {
-            throw new NotImplementedException("Please use the Request method instead.");
-        }
-
-        public override string Read()
-        {
-            throw new NotImplementedException("Please use the Request method instead.");
-        }
     }
 }

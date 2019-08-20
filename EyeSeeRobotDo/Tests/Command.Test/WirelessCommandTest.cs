@@ -4,6 +4,7 @@ using Xunit;
 using WireMock.Server;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
+using System.Linq;
 
 namespace Command.Test
 {
@@ -11,7 +12,7 @@ namespace Command.Test
     {
         public FluentMockServer mockServer { get; private set; }
 
-        private void StartMockServer()
+        private void StartStatusMockServer()
         {
             mockServer = FluentMockServer.Start();
             mockServer
@@ -20,8 +21,20 @@ namespace Command.Test
                     .WithStatusCode(200)
                     .WithHeader("Content-Type", "application/json")
                     .WithBody("{ \"status\": \"success\" }")
-                    .WithDelay(TimeSpan.FromSeconds(1)
-                    )
+                    .WithDelay(TimeSpan.FromSeconds(1))
+                );
+        }
+
+        private void StartMovementMockServer(string expectedFingers, bool expectedHold)
+        {
+            mockServer = FluentMockServer.Start();
+            mockServer
+                .Given(Request.Create().WithPath("/move").WithParam("fingers").WithParam("hold"))
+                .RespondWith(Response.Create()
+                    .WithStatusCode(200)
+                    .WithHeader("Content-Type", "application/json")
+                    .WithBody("{ \"fingers\": \"" + expectedFingers + "\", \"hold\": \"" + expectedHold + "\"}")
+                    .WithDelay(TimeSpan.FromSeconds(2))
                 );
         }
 
@@ -44,7 +57,7 @@ namespace Command.Test
         [Fact]
         public void ReceiveSuccessfulStatusCheck()
         {
-            StartMockServer();
+            StartStatusMockServer();
 
             WirelessCommand command = new WirelessCommand("localhost:" + mockServer.Ports[0]);
             Dictionary<string, string> actual = new Dictionary<string, string>();
@@ -88,6 +101,30 @@ namespace Command.Test
             string actual = command.MoveFingers(selectedFingers, true);
 
             Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(new int[] { 0, 0, 0, 0 }, true)]
+        [InlineData(new int[] { 1, 0, 0, 0 }, false)]
+        [InlineData(new int[] { 0, 1, 0, 0 }, true)]
+        [InlineData(new int[] { 0, 0, 1, 0 }, false)]
+        [InlineData(new int[] { 0, 0, 0, 1 }, false)]
+        [InlineData(new int[] { 1, 1, 1, 1 }, true)]
+        [InlineData(new int[] { 1, 0, 0, 1 }, true)]
+        public void ReceiveSuccessfulFingersTest(int[] selectedFingers, bool hold)
+        {
+            string expectedFingers = String.Join(",", selectedFingers.Select(p => p.ToString()).ToArray());
+            string expectedHold = hold.ToString();
+            StartMovementMockServer(expectedFingers, hold);
+            
+            WirelessCommand command = new WirelessCommand("localhost:" + mockServer.Ports[0]);
+            string actualFingers = command.Request(command.MoveFingers(selectedFingers, hold)).GetAwaiter().GetResult()["fingers"];
+            string actualHold = command.Request(command.MoveFingers(selectedFingers, hold)).GetAwaiter().GetResult()["hold"];
+
+            Assert.Equal(expectedFingers, actualFingers);
+            Assert.Equal(expectedHold, actualHold);
+
+            StopMockServer();
         }
     }
 }

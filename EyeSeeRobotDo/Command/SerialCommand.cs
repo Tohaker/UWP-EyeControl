@@ -35,7 +35,7 @@ namespace Command
             return result.ToString();
         }
 
-        public override bool Send(string message)
+        public bool Send(string message)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace Command
             }
         }
 
-        public override string Read()
+        public string Read()
         {
             try
             {
